@@ -58,3 +58,10 @@ class List extends React.Component {
   }
 }
 ```
+
+### 生命周期
+**只有类组件才有生命周期**,类组件需要实例化,函数组件不需要实例化.
+- `constructor` 初始化state, 创建Ref, 使用bind解决this指向问题
+- `render` 每次组件渲染都会触发
+- `componentDidMount` 初始化执行一次, 发送网络请求, dom操作
+![react-component-lifetime](image/react-lifetime.png)
