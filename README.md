@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+## React 组件进阶
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### [children属性](./src/ChildrenP.jsx)
+目的: 高阶组件 
 
-## Available Scripts
+children属性表示该组件的子节点,只要组件内部有子节点,props中就有该属性;
+```jsx
+function F() {
+  return (
+    <>
+      <C>出现在子组件的children属性</C>
+    </>
+  );
+}
 
-In the project directory, you can run:
+function C(props) {
+  return (
+    <div>
+      {props.children}
+    </div>
+  );
+}
+```
+![react-children-props](image/react-children-props.png)
 
-### `yarn start`
+children可以是`普通文本`, `普通标签元素`, `函数`, `JSX`;
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### [Props 校验](./src/PropsCheck.jsx)
+对于组件来说，props是由外部传入的，我们其实无法保证组件使用者传入了什么格式的数据，如果传入的数据格式不对，就有可能会导致组件内部错误 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### 实现步骤
+1. 安装属性校验包: `yarn add prop-types`
+2. 导入`prop-types`
+3. 使用`组件名.propTypes = {}`给组件添加校验规则
 
-### `yarn test`
+#### [规则说明](https://reactjs.org/docs/typechecking-with-proptypes.html)
+1. 常见类型`array`, `bool`, `func`, `number`, `object`, `string`;
+2. React元素类型 `element`;
+3. 必填项 `isRequired`;
+4. 特定的结构对象 `shape({})`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 默认值
+通过 defaultProps 可以给组件的props设置默认值，在未传入props的时候生效
+```jsx
+// function
+// 1
+List.defaultProps = {
+  pageSize: 10,
+}
 
-### `yarn build`
+// 2
+function List({pageSize=10}){}
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+// class
+class List extends React.Component {
+  static defaultProps = {
+    pageSize: 10
+  }
+}
+```
